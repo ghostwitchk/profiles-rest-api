@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.conf.urls import include
+#we have included this file because  we want to have a function include
+# as by doing so we will import or include urls.py files of all the apps here
+# it's a good practise to have different urls.py files for different apps
+# by doing so we can have particular patterned urls for each app.
 from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/',include('profiles_api.urls'))
+    url(r'^api/',include('profiles_api.urls')
+    # so here we created a regular expression as api/ when django will find it
+    #it will redirect to urls.py of profiles_api and from there it will move further
+    )
 
 ]
