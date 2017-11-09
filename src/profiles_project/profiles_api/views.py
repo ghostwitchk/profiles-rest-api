@@ -82,7 +82,10 @@ class HelloAPIView(APIView):
 
 
 class HelloViewSet(viewsets.ViewSet):
+
     """Test api viewsets."""
+    serializer_class = serializers.HelloSerializer
+    #  by doing this we tell django about the serializer
 
     def list(self,request):
         """returns a hello message."""
@@ -95,3 +98,41 @@ class HelloViewSet(viewsets.ViewSet):
         ]
 
         return Response({'message':'HELLO!','a_viewset':a_viewset})
+
+
+    def create(self,request):
+        """ Creates a new hello message"""
+        #exact same as the post function of apiviews
+        serializer = serializers.HelloSerializer(data=request.data)
+
+        if serializer.is_valid():
+             a = serializer.data.get('name')
+             message = 'Hello {0}'.format(a)
+             return Response({'message':message})
+        else:
+
+         return Response(
+         serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self,request,pk=None):
+        """handles getting an object by its ID."""
+        #same as get function of api views.
+        return Response({'http_method':'GET'})
+    # http_method is just a key of the dictionarry and it is returing a string
+    # it has no particular meaning it is a random choice of using it as a key.
+    # and it is valid for all the functions down below .
+
+    def update(self,request,pk=None):
+        """handles updating an object"""
+
+        return response({'http_method':'PUT'})
+
+    def partial_update(self,request,pk=None):
+        """handles updating parts of an object."""
+
+        return Response({'http_method':'PATCH'})
+
+    def destroy(self,request,pk=None):
+        """handles removing an object"""
+
+        return Response({'http_method':'DELETE'})
