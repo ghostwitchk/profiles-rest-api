@@ -11,6 +11,9 @@ router.register('hello-viewset', views.HelloViewSet, base_name ='hello-viewset')
 # for our viewset .'hello-viewset' is the name by which we want to call our router
 # 'views.HelloViewSet' here we are registring  our view set for which
 # we want to use the router.'base_name' i dont know much anything yet.
+router.register('profile', views.UserProfileViewSet)
+# we doont need to have a base name when we are registring a viewset for a model.
+# still dont know what is the purpose of base_name
 
 urlpatterns = [
 
@@ -20,5 +23,9 @@ url(r'^hello-view/' , views.HelloAPIView.as_view()),
 #we added as_view so that we can return the fuction as it is
 url(r'', include(router.urls)),
 # here we left the regular expression by doing so django will try to find the urls
-# then it will go to the router.urls(P.S i'm still no clear why we did this.)
+# then it will go to the router.urls .when we got to 127.0.0.1:8080/api we will
+# going to find our routed url that django have created for us and the extension
+# after 127.0.0.1:8080/api is the name of the router we had set.the new url will
+#look something like that 127.0.0.1:8080/api/hello-viewset .you will fin things
+# you will find this url on 127.0.0.1:8080/api.
 ]

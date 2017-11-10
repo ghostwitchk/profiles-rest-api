@@ -23,7 +23,7 @@ class UserProfileManager(BaseUserManager):
         #it converts all the letters in email to lower case as it is easier to
         # deal with same kind of charcters and normalize_email is function of
         # UserProfileManager and self is an object of UserProfileManager
-        #and email is storing the result that it returing
+        #and email is storing the result that it is returing
 
         user = self.model(email=email, name=name)
         # this 'user' is an object of UserProfile and this the way we create an
@@ -45,9 +45,15 @@ class UserProfileManager(BaseUserManager):
         """"creates and saves a new superuser with given details"""
 
         user = self.create_user(email,name,password)
+        # here user is an varaibale is different from the obove user
+        #it was an object.so what we are doing here is that we are calling create_superuser
+        #function inhere then passing all the agruments ann saving all the info in
+        # the user
 
         user.is_superuser = True
         user.is_staff = True
+        #these two condtions makes a user asuper user. we make these two conditions
+        # true to make a user super user
 
         user.save(using=self.db)
 

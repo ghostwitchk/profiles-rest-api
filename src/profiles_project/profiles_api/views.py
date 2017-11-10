@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import serializers
 from rest_framework import status
+from . import models
 #things like http 404 ,http505 .these things are bieng imported.
 
 
@@ -136,3 +137,15 @@ class HelloViewSet(viewsets.ViewSet):
         """handles removing an object"""
 
         return Response({'http_method':'DELETE'})
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """ Handles creating reading and updating profies."""
+        #the ModelViewset class handles all the work of updating,reading and
+        # deleting of profiles
+
+    serializer_class = serializers.UserProfileSerializer
+        # here we telling which serializer to use for this Class
+        # and it also knows which model look for as it is defined in meta Class
+        # of UserProfileSerializer
+    queryset =  models.UserProfile.objects.all()
+        # this queryset view set how to retrieve object from database
