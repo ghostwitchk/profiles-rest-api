@@ -8,6 +8,7 @@ from rest_framework import status
 from . import models
 from . import permissions
 from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
 #things like http 404 ,http505 .these things are bieng imported.
 
 
@@ -158,3 +159,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.UpdateOwnProfile,)
     # it also has a comma because if we want to add more permissions Class then
     # we would be able to do that it is an tuple .
+    filter_backends = (filters.SearchFilter,)
+    # here we are telling django whhich filter we want to use,here we are using
+    # search filter.it is aslo wrriten in a tuple.
+    search_fields = ('name','email',)
+    # here we are defining the fields we to search by.
