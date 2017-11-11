@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from . import serializers
 from rest_framework import status
 from . import models
+from . import permissions
+from rest_framework.authentication import TokenAuthentication
 #things like http 404 ,http505 .these things are bieng imported.
 
 
@@ -149,3 +151,10 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         # of UserProfileSerializer
     queryset =  models.UserProfile.objects.all()
         # this queryset view set how to retrieve object from database
+    authentication_classes = (TokenAuthentication,)
+    # we are telling django what type of aythentication we want to use.
+    # it has ',' at the end as we are creating tuple so that we can add more type
+    # of authentications if we want to
+    permission_classes = (permissions.UpdateOwnProfile,)
+    # it also has a comma because if we want to add more permissions Class then
+    # we would be able to do that it is an tuple .
