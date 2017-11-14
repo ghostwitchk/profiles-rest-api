@@ -9,6 +9,8 @@ from . import models
 from . import permissions
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
 #things like http 404 ,http505 .these things are bieng imported.
 
 
@@ -164,3 +166,28 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     # search filter.it is aslo wrriten in a tuple.
     search_fields = ('name','email',)
     # here we are defining the fields we to search by.
+class LoginViewSet(viewsets.ViewSet):
+
+    """checks email and password and returns an auth token"""
+        # in this section what we are doing is that the ObtainAuthToken is an
+        #APIView but we want it as a viewset.so we are returning it from a vieset
+        # means at the end we will return ObtainAuthToken from a function
+        # so this is how we will make it work like a viewset
+    serializer_class = AuthTokenSerializer
+        # we are telling django whic serailazer to use .we have imported
+        #AuthTokenSerializer is a bilt in serializer it has a username field
+        # and a password field that it serialzes and we have setted username as
+        # email so it will make our email as a user name and password that we HAVE
+        # entered to genrate a token that we have to use for authentication for other
+        # apis that is why we had put the TokenAuthentication in our UserProfileViewSet
+        # this whole LoginViewSet will genrate a token that it will post as we HAVE
+        # returned in our create function below.
+
+    def create(self,request):
+        """usethe ObtainAuthToken APIView to validate and create a token."""
+# its just a function which will return ObtainAuthToken apiview
+        return ObtainAuthToken().post(request)
+    # in this we are calling post function of the ObtainAuthToken api view.
+    # as creation of something is related to post function.we post to create
+    # something
+    # now we will add this to our DefaultRouter in urls.py

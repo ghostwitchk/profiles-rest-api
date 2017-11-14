@@ -14,7 +14,9 @@ router.register('hello-viewset', views.HelloViewSet, base_name ='hello-viewset')
 router.register('profile', views.UserProfileViewSet)
 # we doont need to have a base name when we are registring a viewset for a model.
 # still dont know what is the purpose of base_name
-
+router.register('login' , views.LoginViewSet , base_name = 'login')
+# we have added login api view set to our DefaultRouter
+# its not a model view set so we have to set a base_name
 urlpatterns = [
 
 url(r'^hello-view/' , views.HelloAPIView.as_view()),

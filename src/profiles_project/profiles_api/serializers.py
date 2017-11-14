@@ -17,7 +17,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= models.UserProfile
-        # we are telling django that which we want to serialize.
+        # we are telling django that which model we want to serialize.
         fields = ('id','email','name','password')
         #here we defining fields which we want to serialize of that particular model
         extra_kwargs = {'password':{'write_only':True}}
