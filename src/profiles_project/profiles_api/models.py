@@ -113,3 +113,26 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     #it can print ,we are returing email address in this case it is unique and
     #we would like to identify a particular user by its email,so we like to
     #print a user's profile we would like to have its email printed.
+
+
+class ProfileFeedItem(models.Model):
+    """ Return the model as a string"""
+# in here we are making a new model which will store all the status update that
+# a user will make.
+    user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
+    # here we are connecting this ProfileFeedItem model with UserProfile model
+    # by crearting a Foreignkey between them. 'on_delete = models.CASCADE'
+    # is that when a user deletes his profile then delete all his status update
+    # too.
+    status_text = models.CharField(max_length=255)
+    # here we just creating a field that will going to store staus updates
+
+    created_on =  models.DateTimeField(auto_now_add=True)
+    # it will store the time and date of status update .if we dont specify the time
+    # and date it will take current date adn time as the time of status update.
+
+    def __str__(self):
+        """Return the model as a string."""
+
+        return self.status_text
+    # refer line 108
