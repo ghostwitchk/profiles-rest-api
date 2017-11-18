@@ -50,3 +50,17 @@ class UpdateOwnProfile(permissions.BasePermission):
     # to use destructive methods as the 'if statement' didnt execute.if 'if statement'
     # got executed then the system wont reach til 'return obj.id==request.user.id'
     # he cannot use destructive methods on other profiles
+
+class PostOwnStatus(permissions.BasePermission):
+    """allows users to update their own status."""
+    # this permissions is for feed api .
+    # and for more info read above descriptions.
+
+    def has_object_permission(self,request,view,obj):
+        """checks the user is trying to update their own status."""
+
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.user_profile.id == request.user.id
+# dont know why we are using foriegn key to get user's id this time.

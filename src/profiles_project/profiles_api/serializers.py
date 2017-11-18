@@ -45,3 +45,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
             user.save()
 
             return user
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    """ As serializer for profile feed item"""
+
+    class Meta:
+
+        model = models.ProfileFeedItem
+        fields = ('id','user_profile','status_text', 'created_on')
+        extra_kwargs = {'user_profile':{'read_only':True}}
+        # we have set user_profile to read only beacuse it is an key and we dont
+        # users to create  other users or delete feed items. as it is an ForeignKey
+        # adn it will be Generated automatically and it will connect UserProfile to
+        # our ProfileFeedItem .we dont want to edit their or others foreign keys.
+
+        

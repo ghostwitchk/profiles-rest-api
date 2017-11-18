@@ -17,6 +17,9 @@ router.register('profile', views.UserProfileViewSet)
 router.register('login' , views.LoginViewSet , base_name = 'login')
 # we have added login api view set to our DefaultRouter
 # its not a model view set so we have to set a base_name
+
+router.register('feed' , views.UserProfileFeedViewSet)
+# as it is a model view set we dont need to define the base_name
 urlpatterns = [
 
 url(r'^hello-view/' , views.HelloAPIView.as_view()),

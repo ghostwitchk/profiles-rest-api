@@ -11,7 +11,13 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
-#things like http 404 ,http505 .these things are bieng imported.
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# we are importing 'IsAuthenticatedOrReadOnly' package because it is an
+# permission class (predefined), which only allows logged in user to do like
+# status updates.
+from rest_framework.permissions import IsAuthenticated
+# we can use this class if we want only regustered user to see other user's
+# status updates.
 
 
 
@@ -191,3 +197,24 @@ class LoginViewSet(viewsets.ViewSet):
     # as creation of something is related to post function.we post to create
     # something
     # now we will add this to our DefaultRouter in urls.py
+
+
+class UserProfileFeedViewSet(viewsets.ModelViewSet):
+    """handles creating ,reading and updating profile feed items."""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.ProfileFeedItemSerializer
+    queryset = models.ProfileFeedItem.objects.all()
+    permission_classes = (permissions.PostOwnStatus, IsAuthenticatedOrReadOnly )
+    # this IsAuthenticatedOrReadOnly permission class which is predefined it
+    # only allows the logged in users to do status updates or whatever they want to
+    # do or it will restrict them to read only.
+
+    def perform_create(self,serializer):
+        """ sets the user profile to the logged in user"""
+# it is an predefined function in ModelViewSet class that always get called
+# but here we are trying to edit this as we want to set the user_profile
+# to the current user .as user_profile is an foreign key we want to connect
+# both the models so we are setting foreign key(user_profile) ouselves.
+        serializer.save(user_profile= self.request.user)
+        # we have set the user_profile to the current user
+        # and we have saved it using serializer -- not sure why.
