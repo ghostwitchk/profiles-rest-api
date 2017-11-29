@@ -25,7 +25,7 @@ SECRET_KEY = 'ojp(^g=#^($ah6rl8c$o0ju-t&2t#i$o=5(0yly!dh)5vg#_no'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-18-217-153-151.us-east-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['18.217.150.234']
 
 
 # Application definition
